@@ -2,36 +2,34 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export default function SelectedContact({ selectedContactId, setSelectedContactId }) {
-    const [contact, setContact] = useState(null);
+export default function SelectedContact({ selectedContactId, setSelectedContactId }) { // {pickMyId, myId}
+    const [contact, setContact] = useState({})
 
     useEffect(() => {
       async function fetchSelectedContact() {
         try {
-          if (selectedContactId !== null) {
-            const response = await fetch(
-              `https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${selectedContactId}`
-            );
+            const response = await fetch(`https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${selectedContactId}`);            //${myId}
             const result = await response.json();
-            // console.log(contact)
             setContact(result);
-          }
         } catch (error) {
           console.error(error);
         }
       }
-      fetchSelectedContact();
-    }, [selectedContactId]);
+      fetchSelectedContact(); //calls selected function
+    }, []); // [] empty dependency array bc not choosing selected contact
 
-    if (contact === null) {
-      return <div>No contact selected</div>;
-    }
     return (
       <div>
         <h2>Contact Details</h2>
-        <p>Name: {contact.name}</p>
+        <p>Name: {contact.name}</p> 
         <p>Email: {contact.email}</p>
         <p>Phone: {contact.phone}</p>
+        <div>
+          Address:           {/* ? means if address has data look for street/city/zipcode  */}
+          <p>{contact.address?.street}</p> 
+          <p>{contact.address?.city}</p>
+          <p>{contact.address?.zipcode}</p>
+        </div>
         <button onClick={() => setSelectedContactId(null)}>Back to List</button>
       </div>
     );

@@ -10,15 +10,15 @@ const dummyContacts = [
   ];
   
   export default function ContactList({ setSelectedContactId }) {
-    const [contacts, setContacts] = useState(dummyContacts);
+    // const [contacts, setContacts] = useState(dummyContacts); //uses dummy contacts array
+    const [contacts, setContacts] = useState([]);
+    // console.log(contacts)
     useEffect(() => {
-        async function fetchContacts() {
+        async function fetchContacts() { //async bc need to wait to get data from API
           try {
-            const response = await fetch(
-              'https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users'
-            );
-            const result = await response.json();
-            // console.log(result);
+            const response = await fetch('https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users');
+            const result = await response.json(); //changes response to json
+            // console.log(result)
             setContacts(result);
           } catch (error) {
             console.error(error);
@@ -39,11 +39,12 @@ const dummyContacts = [
               <td>Email</td>
               <td>Phone</td>
             </tr>
-            {contacts.map((contact) => {
+            {
+            contacts.map((contact) => {
               return <ContactRow
                 key={contact.id}
-                contact={contact}
-                setSelectedContactId={setSelectedContactId}
+                contact={contact} //bubbles={contact}
+                setSelectedContactId={setSelectedContactId} //pickId={chosenId}
               />
             })}
             </tbody>
