@@ -30,7 +30,7 @@ export default function SelectedContact({ selectedContactId, setSelectedContactI
           <p>{contact.address?.city}</p>
           <p>{contact.address?.zipcode}</p>
         </div>
-        <button onClick={() => setSelectedContactId()}>Back to List</button>
+        <button onClick={() => setSelectedContactId(null)}>Back to List</button>
       </div>
     );
   }
